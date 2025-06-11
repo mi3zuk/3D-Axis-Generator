@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { TrackballControls } from './lib/TrackballControls.js';
 
 let scene, camera, renderer, controls;
-const arrowSize = 100;
+const arrowSize = 80;
 const headLength = 15;
 const headWidth = 10;
 
@@ -13,7 +13,7 @@ animate();
 function init() {
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+    camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 1000);
     camera.position.set(100, 100, 100);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -30,7 +30,7 @@ function init() {
     controls.dynamicDampingFactor = 0.3;
     controls.enableDamping = false;
     controls.minDistance = 80;
-    controls.maxDistance = 400; 
+    controls.maxDistance = 700; 
     controls.update();
 
     const arrowX = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0, 0), arrowSize, 0xff0000, headLength, headWidth);
@@ -94,7 +94,7 @@ window.setView = function(plane) {
         case 'xy':
             // x↑ y→
             pos = new THREE.Vector3(0, 0, -dist); 
-            up = new THREE.Vector3(0, 0, 1);  
+            up = new THREE.Vector3(1, 0, 0);  
             break;
         case 'yz':
             // y↑ z→
@@ -104,7 +104,7 @@ window.setView = function(plane) {
         case 'zx':
             // z↑ x→
             pos = new THREE.Vector3(0, -dist, 0); 
-            up = new THREE.Vector3(1, 0, 0);  
+            up = new THREE.Vector3(0, 0, 1);  
             break;
         default:
             return;
