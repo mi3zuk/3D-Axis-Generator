@@ -11,21 +11,17 @@ window.addEventListener('resize', onWindowResize, false);
 animate();
 
 function init() {
-    // シーン作成
     scene = new THREE.Scene();
 
-    // カメラ作成
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
     camera.position.set(100, 100, 100);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-    // レンダラー作成
     renderer = new THREE.WebGLRenderer({ preserveDrawingBuffer: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0xffffff, 1);
     document.getElementById('container').appendChild(renderer.domElement);
 
-    // TrackballControls の初期化
     controls = new TrackballControls(camera, renderer.domElement);
     controls.target.set(0, 0, 0);
     controls.rotateSpeed = 5.0;
@@ -33,11 +29,10 @@ function init() {
     controls.panSpeed = 0.8;
     controls.dynamicDampingFactor = 0.3;
     controls.enableDamping = false;
-    controls.minDistance = 60;   // ズームインの最小距離
-    controls.maxDistance = 300;  // ズームアウトの最大距離
+    controls.minDistance = 80;
+    controls.maxDistance = 400; 
     controls.update();
 
-    // 各軸の矢印生成
     const arrowX = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0, 0), arrowSize, 0xff0000, headLength, headWidth);
     scene.add(arrowX);
     const arrowY = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), arrowSize, 0x00ff00, headLength, headWidth);
@@ -45,13 +40,11 @@ function init() {
     const arrowZ = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, 0), arrowSize, 0x0000ff, headLength, headWidth);
     scene.add(arrowZ);
 
-    // XYZラベル追加
     addAxisLabel('X', arrowSize + 15, 0, 0, 'black');
     addAxisLabel('Y', 0, arrowSize + 15, 0, 'black');
     addAxisLabel('Z', 0, 0, arrowSize + 15, 'black');
 }
 
-// ラベル用スプライト生成関数
 function addAxisLabel(text, x, y, z, color) {
     const canvas = document.createElement('canvas');
     canvas.width = 128;
@@ -83,11 +76,43 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-// 画像保存機能
+// Save Image
 window.saveImage = function() {
     const dataURL = renderer.domElement.toDataURL("image/png");
     const link = document.createElement('a');
     link.download = 'coordinate_axes.png';
     link.href = dataURL;
     link.click();
+};
+
+// Set Axis
+window.setView = function(plane) {
+    const dist = 200;
+    let pos, up;
+
+    switch (plane) {
+        case 'xy':
+            // x:上, y:右
+            pos = new THREE.Vector3(0, -dist, 0); // yマイナス方向から
+            up = new THREE.Vector3(1, 0, 0);      // x軸を上に
+            break;
+        case 'yz':
+            // y:上, z:右
+            pos = new THREE.Vector3(-dist, 0, 0); // xマイナス方向から
+            up = new THREE.Vector3(0, 1, 0);      // y軸を上に
+            break;
+        case 'zx':
+            // z:上, x:右
+            pos = new THREE.Vector3(0, 0, -dist); // zマイナス方向から
+            up = new THREE.Vector3(0, 0, 1);      // z軸を上に
+            break;
+        default:
+            return;
+    }
+
+    camera.position.copy(pos);
+    camera.up.copy(up);
+    camera.lookAt(0, 0, 0);
+    controls.target.set(0, 0, 0);
+    controls.update();
 };
