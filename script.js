@@ -93,8 +93,8 @@ window.setView = function(plane) {
     switch (plane) {
         case 'xy':
             // x↑ y→
-            pos = new THREE.Vector3(0, -dist, 0); 
-            up = new THREE.Vector3(1, 0, 0);  
+            pos = new THREE.Vector3(0, 0, -dist); 
+            up = new THREE.Vector3(0, 0, 1);  
             break;
         case 'yz':
             // y↑ z→
@@ -103,8 +103,8 @@ window.setView = function(plane) {
             break;
         case 'zx':
             // z↑ x→
-            pos = new THREE.Vector3(0, 0, -dist); 
-            up = new THREE.Vector3(0, 0, 1);  
+            pos = new THREE.Vector3(0, -dist, 0); 
+            up = new THREE.Vector3(1, 0, 0);  
             break;
         default:
             return;
