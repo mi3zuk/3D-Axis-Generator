@@ -93,18 +93,18 @@ window.setView = function(plane) {
     switch (plane) {
         case 'xy':
             // x↑ y→
-            pos = new THREE.Vector3(0, -dist, 0); // yマイナス方向から
-            up = new THREE.Vector3(1, 0, 0);      // x軸を上に
+            pos = new THREE.Vector3(0, -dist, 0); 
+            up = new THREE.Vector3(1, 0, 0);  
             break;
         case 'yz':
             // y↑ z→
-            pos = new THREE.Vector3(-dist, 0, 0); // xマイナス方向から
-            up = new THREE.Vector3(0, 1, 0);      // y軸を上に
+            pos = new THREE.Vector3(-dist, 0, 0); 
+            up = new THREE.Vector3(0, 1, 0);    
             break;
         case 'zx':
             // z↑ x→
-            pos = new THREE.Vector3(0, 0, -dist); // zマイナス方向から
-            up = new THREE.Vector3(0, 0, 1);      // z軸を上に
+            pos = new THREE.Vector3(0, 0, -dist); 
+            up = new THREE.Vector3(0, 0, 1);  
             break;
         default:
             return;
