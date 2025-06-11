@@ -117,12 +117,10 @@ window.setView = function(plane) {
     controls.update();
 };
 
-// Euler
+// Rotate Axis
 let rotationEuler = new THREE.Euler(0, 0, 0, 'XYZ');
 
-// Rotate Axis
 window.rotateAxis = function(axis) {
-    // Input
     let deg = 90;
     if (axis === 'x') deg = parseFloat(document.getElementById('rotate-x').value) || 0;
     if (axis === 'y') deg = parseFloat(document.getElementById('rotate-y').value) || 0;
@@ -130,17 +128,18 @@ window.rotateAxis = function(axis) {
 
     const rad = THREE.MathUtils.degToRad(deg);
 
-    if (axis === 'x') rotationEuler.x += rad;
-    if (axis === 'y') rotationEuler.y += rad;
-    if (axis === 'z') rotationEuler.z += rad;
+    const pos = camera.position.clone().sub(controls.target);
+    const euler = new THREE.Euler(
+        axis === 'x' ? rad : 0,
+        axis === 'y' ? rad : 0,
+        axis === 'z' ? rad : 0,
+        'XYZ'
+    );
+    pos.applyEuler(euler);
+    camera.position.copy(pos.add(controls.target));
 
-    const r = camera.position.length();
-    const newPos = new THREE.Vector3(0, 0, r);
-    newPos.applyEuler(rotationEuler);
-    camera.position.copy(newPos);
-    camera.up.set(0, 1, 0).applyEuler(rotationEuler);
-    camera.lookAt(0, 0, 0);
+    camera.up.applyEuler(euler);
 
-    controls.target.set(0, 0, 0);
+    camera.lookAt(controls.target);
     controls.update();
 };
