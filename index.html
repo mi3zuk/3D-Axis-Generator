@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>3D Axis Generator</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #ffffff;
+    }
+    #container {
+      width: 100vw;
+      height: 100vh;
+    }
+    .button-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+    }
+    .view-button {
+      margin-bottom: 5px;
+      padding: 8px 12px;
+      background: #eee;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <div class="button-container">
+    <button class="view-button" onclick="setView('xy')">XY Plane</button><br>
+    <button class="view-button" onclick="setView('yz')">YZ Plane</button><br>
+    <button class="view-button" onclick="setView('zx')">ZX Plane</button><br>
+    <button class="view-button" onclick="saveImage()">画像として保存</button>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./lib/three.module.js"
+    }
+  }
+  </script>
+  <script src="./script.js" type="module"></script>
+</body>
+</html>
