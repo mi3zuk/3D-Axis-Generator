@@ -13,17 +13,23 @@
       width: 100vw;
       height: 100vh;
     }
-    .button-container {
+    .Set-btn {
       position: absolute;
       top: 10px;
       left: 10px;
       z-index: 10;
     }
+    .Rotate-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+    }
     .view-button {
       margin-bottom: 5px;
       padding: 8px 12px;
-      background: #eee;
-      border: 1px solid #ccc;
+      background: #dbdbdbca;
+      border: 1px solid #828282;
       cursor: pointer;
       font-family: Arial, sans-serif;
     }
@@ -31,11 +37,19 @@
 </head>
 <body>
   <div id="container"></div>
-  <div class="button-container">
+  <div class="Set-btn">
     <button class="view-button" onclick="setView('xy')">XY Plane</button><br>
     <button class="view-button" onclick="setView('yz')">YZ Plane</button><br>
     <button class="view-button" onclick="setView('zx')">ZX Plane</button><br>
     <button class="view-button" onclick="saveImage()">画像として保存</button>
+  </div>
+  <div class="Rotate-btn">
+    <label>X-axis: <input type="number" id="rotate-x" value="90" style="width:50px;">deg</label>
+    <button class="view-button" onclick="rotateAxis('x')">Rotate</button><br>
+    <label>Y-axis: <input type="number" id="rotate-y" value="90" style="width:50px;">deg</label>
+    <button class="view-button" onclick="rotateAxis('y')">Rotate</button><br>
+    <label>Z-axis: <input type="number" id="rotate-z" value="90" style="width:50px;">deg</label>
+    <button class="view-button" onclick="rotateAxis('z')">Rotate</button><br>
   </div>
 
   <script type="importmap">

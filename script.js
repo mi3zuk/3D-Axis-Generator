@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { TrackballControls } from './lib/TrackballControls.js';
 
 let scene, camera, renderer, controls;
-const arrowSize = 80;
+const arrowSize = 100;
 const headLength = 15;
 const headWidth = 10;
 
@@ -92,17 +92,17 @@ window.setView = function(plane) {
 
     switch (plane) {
         case 'xy':
-            // x:上, y:右
+            // x↑ y→
             pos = new THREE.Vector3(0, -dist, 0); // yマイナス方向から
             up = new THREE.Vector3(1, 0, 0);      // x軸を上に
             break;
         case 'yz':
-            // y:上, z:右
+            // y↑ z→
             pos = new THREE.Vector3(-dist, 0, 0); // xマイナス方向から
             up = new THREE.Vector3(0, 1, 0);      // y軸を上に
             break;
         case 'zx':
-            // z:上, x:右
+            // z↑ x→
             pos = new THREE.Vector3(0, 0, -dist); // zマイナス方向から
             up = new THREE.Vector3(0, 0, 1);      // z軸を上に
             break;
@@ -113,6 +113,34 @@ window.setView = function(plane) {
     camera.position.copy(pos);
     camera.up.copy(up);
     camera.lookAt(0, 0, 0);
+    controls.target.set(0, 0, 0);
+    controls.update();
+};
+
+// Euler
+let rotationEuler = new THREE.Euler(0, 0, 0, 'XYZ');
+
+// Rotate Axis
+window.rotateAxis = function(axis) {
+    // Input
+    let deg = 90;
+    if (axis === 'x') deg = parseFloat(document.getElementById('rotate-x').value) || 0;
+    if (axis === 'y') deg = parseFloat(document.getElementById('rotate-y').value) || 0;
+    if (axis === 'z') deg = parseFloat(document.getElementById('rotate-z').value) || 0;
+
+    const rad = THREE.MathUtils.degToRad(deg);
+
+    if (axis === 'x') rotationEuler.x += rad;
+    if (axis === 'y') rotationEuler.y += rad;
+    if (axis === 'z') rotationEuler.z += rad;
+
+    const r = camera.position.length();
+    const newPos = new THREE.Vector3(0, 0, r);
+    newPos.applyEuler(rotationEuler);
+    camera.position.copy(newPos);
+    camera.up.set(0, 1, 0).applyEuler(rotationEuler);
+    camera.lookAt(0, 0, 0);
+
     controls.target.set(0, 0, 0);
     controls.update();
 };
