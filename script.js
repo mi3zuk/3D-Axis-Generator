@@ -13,7 +13,7 @@ animate();
 function init() {
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 2000);
     camera.position.set(100, 100, 100);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -30,7 +30,7 @@ function init() {
     controls.dynamicDampingFactor = 0.3;
     controls.enableDamping = false;
     controls.minDistance = 80;
-    controls.maxDistance = 700; 
+    controls.maxDistance = 1000; 
     controls.update();
 
     const arrowX = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0, 0), arrowSize, 0xff0000, headLength, headWidth);
